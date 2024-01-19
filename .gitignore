@@ -1,4 +1,5 @@
 .gradle
+
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -39,6 +40,8 @@ bin/
 .vscode/
 
 .gradle
+=======
+>>>>>>> b2f7fc0ba1ddedfbb326b7df11171a0c9623094a
 **/build/
 !src/**/build/
 
@@ -61,3 +64,4 @@ gradle-app.setting
 .classpath
 
 .idea/
+
