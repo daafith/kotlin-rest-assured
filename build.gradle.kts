@@ -17,10 +17,11 @@ dependencies {
     testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
     testImplementation("io.rest-assured:rest-assured:5.4.0")
     testImplementation("io.rest-assured:kotlin-extensions:5.4.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
 }
 
 jsonSchema2Pojo {
-    targetPackage = "generated.resonpse"
+    targetPackage = "generated.response"
     includeAdditionalProperties = false
     setSource(files("$projectDir/src/test/resources/schema"))
 }

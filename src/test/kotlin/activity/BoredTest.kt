@@ -1,25 +1,25 @@
 package activity
 
 import assertk.assertThat
-import assertk.assertions.isEqualTo
-import assertk.assertions.isNotEmpty
-import assertk.assertions.isNotEqualTo
-import assertk.assertions.isTrue
-import generated.resonpse.ActivityResponse
+import assertk.assertions.*
+import generated.response.ActivityResponse
 import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.function.Executable
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvFileSource
+
 
 class BoredTest {
 
     private val activityTypes =
         listOf("education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork")
 
+    //https://apipheny.io/free-api/
     @Test
     fun `should suggest something to do when I feel bored`() {
         val response = getActivity()
@@ -38,18 +38,16 @@ class BoredTest {
         assertThat(firstTime.activity).isNotEqualTo(secondTime.activity)
     }
 
-    @Test
-    fun `should return a specific activity by key`() {
-        val keyToFind = "5881028"
-        val params = mapOf("key" to keyToFind)
-
-        val response = getActivity(params)
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/activities.csv"], numLinesToSkip = 1)
+    fun `should return a specific activity by key`(keyToFind: String, activityName: String, type: String, participants: Int, price: Double) {
+        val response = getActivity(mapOf("key" to keyToFind))
 
         assertAll(
-            Executable { assertThat(response.activity).isEqualTo("Learn a new programming language") },
-            Executable { assertThat(response.type).isEqualTo("education") },
-            Executable { assertThat(response.participants).isEqualTo(1) },
-            Executable { assertThat(response.price).isEqualTo(0.1) },
+            Executable { assertThat(response.activity).isEqualTo(activityName) },
+            Executable { assertThat(response.type).isEqualTo(type) },
+            Executable { assertThat(response.participants).isEqualTo(participants) },
+            Executable { assertThat(response.price).isEqualTo(price) },
             Executable { assertThat(response.key).isEqualTo(keyToFind) },
         )
     }
