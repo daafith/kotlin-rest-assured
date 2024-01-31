@@ -6,11 +6,15 @@ import io.kotest.matchers.string.startWith
 import org.junit.jupiter.api.Test
 
 
-class SomeKotestTests {
+class SomeKotestTest {
 
     @Test
     fun `some nice infixes to make things readable`() {
         "Test" should startWith("T")
         1 + 41 shouldBe 42
     }
+
+
+
+
 }
